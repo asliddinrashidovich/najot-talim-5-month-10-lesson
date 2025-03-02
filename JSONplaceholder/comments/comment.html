@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style>
+        body {
+            min-width: 100vh;
+            background: rgb(11, 199, 124);
+        }
+    </style>
+  </head>
+  <body>
+    <h1 class="text-center text-[30px] font-semibold py-5">Comment Info</h1>
+    <div class="flex container">
+      
+    </div>
+    <script>
+        const container = document.querySelector('.container');
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id")
+        let API = `https://jsonplaceholder.typicode.com/comments/${id}`;
+            
+        async function getData() {
+            const res = await fetch(API);
+            const data = await res.json();
+            console.log(data)
+            setData(data)
+        } 
+        getData();
+
+        function setData(data) {
+          container.innerHTML = `
+             <div class="max-w-[500px] p-6 w-full bg-white mx-auto container rounded-[10px]">
+              <h1 class="text-[20px] font-semibold text-blue-600 mb-2">${data.id}) ${data.name}</h1>
+              <p class="mb-2"><span class="font-semibold ">Email:</span> ${data.email}</p>
+              <p class="text-[14px] text-[#555]">${data.body}</p>
+            </div>
+          `
+        }
+    </script>
+  </body>
+</html>

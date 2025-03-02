@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style>
+        body {
+            min-width: 100vh;
+            background: rgb(11, 199, 124);
+        }
+    </style>
+  </head>
+  <body>
+    <h1 class="text-center text-[30px] font-semibold py-5">User Info </h1>
+    <div class="flex flex-col  container">
+       
+    </div>
+    <script>
+        const container = document.querySelector('.container');
+        const h1 = document.querySelector('h1');
+
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id")
+        h1.innerHTML = `User Info ${id}`
+        let API = `https://jsonplaceholder.typicode.com/users/${id}`;
+            
+        async function getData() {
+            const res = await fetch(API);
+            const data = await res.json();
+            console.log(data)
+            setData(data)
+        } 
+        getData();
+
+        function setData(data) {
+          container.innerHTML = `
+            <div class="max-w-[500px] p-6 w-full bg-white mx-auto container rounded-[10px]">
+                <h1 class="text-[22px] text-center font-semibold text-[coral] mb-1">${data.name}</h1>
+                <p class="mb-0"><span class="font-semibold ">Email:</span> ${data.email}</p>
+                <p class="mb-1"><span class="font-semibold ">Username:</span> ${data.username}</p>
+                <p class="mb-1"><span class="font-semibold ">Phone:</span> ${data.phone}</p>
+                <p class="mb-2"><span class="font-semibold ">Website:</span> ${data.website}</p>
+                <hr>
+                <p class="mt-4"><span class="font-semibold ">Address:</span></p>
+                <p class="ml-3"><span class="font-semibold ">street:</span> ${data.address.street}</p>
+                <p class="ml-3 text-[14px]"><span class="font-semibold ">suite:</span> ${data.address.suite}</p>
+                <p class="ml-3 text-[14px]"><span class="font-semibold ">city:</span> ${data.address.city}</p>
+                <p class="ml-3 text-[14px]"><span class="font-semibold ">zipcode:</span> ${data.address.zipcode}</p>
+                <p class="ml-3 mb-4 text-[14px]"><span class="font-semibold ">Geo:</span> lat: ${data.address.geo.lat},   lng: ${data.address.geo.lng}</p>
+                <hr>
+                <p class="mt-4"><span class="font-semibold ">Company:</span></p>
+                <p class="ml-3 text-[14px]"><span class="font-semibold ">name:</span> ${data.company.name}</p>
+                <p class="ml-3 text-[14px]"><span class="font-semibold ">catch phrase:</span> ${data.company.catchPhrase}</p>
+                <p class="ml-3 text-[14px]"><span class="font-semibold ">bs:</span> ${data.company.bs}</p>
+            </div>
+          `
+        }
+    </script>
+  </body>
+</html>
