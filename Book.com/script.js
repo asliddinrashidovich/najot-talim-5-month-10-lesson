@@ -292,6 +292,9 @@ async function getData() {
 getData();
 
 
+
+
+
 function initApp(data) {
   data.forEach((value, key) => {
     let randomNum = Math.floor(Math.random() * 1000)
